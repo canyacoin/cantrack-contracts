@@ -16,8 +16,7 @@ contract('CanTrack', accounts => {
                 console.log(error);
             }
             
-            let pieces = result.args.code.split('/');
-            shortLinkCode = pieces[pieces.length-1];
+            shortLinkCode = result.args.code;
         });
     });
 
@@ -49,6 +48,7 @@ contract('CanTrack', accounts => {
             return cantrack.getSender(shortLinkCode);
         }).then(sender => {
             assert.equal(sender.valueOf(), owner, 'the data sender does not match the contract caller address');
+            ShortLinkEvent.stopWatching();
         }).catch(error => console.log(error));
     });
 });

@@ -58,8 +58,7 @@ contract CanTrack is Ownable {
             sender: tx.origin
         });
 
-        string memory link = strUtils.concat(URL, code);
-        ShortLink(block.timestamp, link);
+        ShortLink(block.timestamp, code);
     }
 
     // Get record timestamp
