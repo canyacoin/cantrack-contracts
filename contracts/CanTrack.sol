@@ -19,6 +19,8 @@ contract CanTrack is Ownable {
     }
     
     mapping (string => data) private cantrack;
+
+    string public mostRecentCode;
     
     
     event ShortLink(uint256 timestamp, string code);
@@ -49,16 +51,20 @@ contract CanTrack is Ownable {
     // Add record
     function addData(string json) public {
         // require(json.isValidJson());
-        
-        string memory code = generateShortLink();
 
-        cantrack[code] = data({
+        mostRecentCode = generateShortLink();
+        
+        cantrack[mostRecentCode] = data({
             timestamp: block.timestamp,
             json: json,
             sender: tx.origin
         });
 
-        ShortLink(block.timestamp, code);
+        ShortLink(block.timestamp, mostRecentCode);
+    }
+
+    function getMostRecentCode() public view returns (string) {
+        return mostRecentCode;
     }
 
     // Get record timestamp
